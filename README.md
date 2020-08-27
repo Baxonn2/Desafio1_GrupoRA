@@ -2,7 +2,7 @@
 Este es el repositorio donde el Grupo RA desarrolla el Desafío 1
 
 ## Instrucciones
-// TODO: Hacer esto
+// TODO: Hacer est.o
 
 ## Integrantes
 * Franco Ardiles
