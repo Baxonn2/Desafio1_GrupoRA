@@ -1,15 +1,17 @@
 from copy import deepcopy as copy
-from queue import PriorityQueue
-
+import heapq
 
 
 class State:
-	pl = 0
+	pl = 0		   # largo de las tablas
 	dims = []      # lista de dimensiones por cortar
-	planks = []    # lista de palo restante por palo
-	cuts = []      # lista de cortes por palo
+	planks = []    # lista de tabla (dimensión) restante por palo
+	cuts = []      # lista de cortes por palo [[100, 300, 400], [3000, 200], [500, 2700]]
 	visited = False
-	bf = 0
+	bf = 0         # heuristica best fit: cada tabla que no tenga dimensión restante
+				   # 					  suma 1 punto, de esta forma se minimiza el 
+				   #					  gasto por tabla, (mejor bf, mejor estado)
+	ub = 0		   #upper bound
 
 	def __init__(self,dims,planks_length):
 		self.dims=dims
@@ -18,11 +20,20 @@ class State:
 		self.visited=False
 		self.pl=planks_length
 		self.bf=0
+		self.ub=len(dims)
+
+		# todas las dimensiones mayores al largo de la plank serán truncadas
+		for i in self.dims:
+			if i > self.pl:
+				self.dims.pop(self.dims.index(i))
+				self.dims.append(self.pl)
 
 		total_dim = 0
 		for i in self.dims:
+			print(i)
 			total_dim+=i
 
+		#set el lower bound. La cantidad mínima de tablas es la suma de las dimensiones / largo tabla
 		while total_dim>0:
 			self.planks.append(planks_length)
 			total_dim-=planks_length
@@ -30,21 +41,19 @@ class State:
 		for i, a in enumerate(self.planks):
 			self.cuts.append([])
 
-	def sort_cuts(self):
-		self.cuts.sort()
-		# sort by valor total maybe?ol{+`9}
-		for i in self.cuts:
-			i.sort()
 
+	# se define el operador '<' para los estados, donde un operador con mayor numero de best fits 
+	# será menor que otro con menor número, está al revés por temas de la cola con prioridad, 
+	# mayor bf, mayor prioridad
 	def __lt__(self, other):
 		selfPriority = self.bf
 		otherPriority = other.bf
-		return selfPriority < otherPriority
+		return selfPriority > otherPriority
 
 
 class Action:
-	cut = 0
-	plank = 0
+	cut = 0      #dimensión a cortar
+	plank = 0    #tabla a la cual cortarle la dimensión 
 
 	def __init__(self,plank,cut):
 		self.cut=cut
@@ -57,7 +66,16 @@ def get_actions(state: State):
 			action = Action(plank, dim)
 			if is_state_valid(transition(state,action)):
 				actions.append(action)
-	return actions
+
+	if len(actions)> 0:
+		return actions
+	else:				# si no hay acciones validas se agrega una tabla
+		state.planks.append(state.pl)
+		state.cuts.append([])
+		if(len(state.planks)<state.ub):	# previene loop infinito
+			return get_actions(state)
+		else: 
+			return []
 
 
 def is_state_valid(state: State):
@@ -79,7 +97,10 @@ def transition(state: State, action: Action):
 	new_state.planks[action.plank]-=action.cut
 	new_state.cuts[action.plank].append(action.cut)
 	new_state.dims.remove(action.cut)
-	#print(new_state.planks)
+	# si la acción hizo un perfect fit (largo restante = 0 )
+	if new_state.planks[action.plank] == 0:
+		new_state.bf+=1
+
 	return new_state
 
 def visit(state):
@@ -88,53 +109,12 @@ def visit(state):
 def visited(state):
 	return state.visited
 
-def best_fit(state):
-	best_fits = 0
-	for i in state.planks:
-		if i == 0:
-			best_fits+=1
-	state.bf=best_fits
-	return int(best_fits)
-
-
-
-def not_in_by_content(solutions,node):
-	for i in solutions:
-		if i.cuts == node.cuts:
-			return False #revisar si las tablas están ordenadas también
-	return True
-
-def DFS(state: State):
-	solutions = []
-	stack = []
-	state.visited=False
-	stack.append(state)
-
-	while(len(stack) > 0):
-		node = stack.pop()
-
-		if visited(node):
-			continue
-		else:
-			visit(node)
-
-		if is_final_state(node):
-			return node
-
-		actions=get_actions(node)
-		for action in actions:
-			sub_node = transition(node,action) 
-			if not visited(sub_node):
-				stack.append(sub_node)
-
-
-	return solutions
-
 def best_first(state: State):
-	q = PriorityQueue()
-	q.put( (4,state) )
-	while not q.empty():
-		pr , node = q.get()
+	q = []
+	heapq.heappush(q,state)
+	while len(q) >0:
+		node = heapq.heappop(q)
+		print(len(node.planks))
 		if visited(node):
 			continue
 		else:
@@ -147,14 +127,12 @@ def best_first(state: State):
 		for action in actions:
 			sub_node = transition(node,action) 
 			if not visited(sub_node):
-				q.put((-best_fit(sub_node),sub_node))
+				heapq.heappush(q,sub_node)
 
+state = State([100,200,32200,400,500,3000,2700,1601,1601,1601,1599,1601,1601,1601,1601,1601,1601],3200)
 
+best = best_first(state)
+print(len(best.planks))
+print(best.cuts)
 
-state = State([100,200,300,400,500,3000,2700],3200)
-#get_actions(state)
-#print(state.planks)
-print(DFS(state).cuts)
-#print(best_first(state).cuts)
-#print(DFS(state).cuts)
 
