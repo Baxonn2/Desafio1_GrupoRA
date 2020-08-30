@@ -30,7 +30,6 @@ class State:
 
 		total_dim = 0
 		for i in self.dims:
-			print(i)
 			total_dim+=i
 
 		#set el lower bound. La cantidad mínima de tablas es la suma de las dimensiones / largo tabla
@@ -46,9 +45,22 @@ class State:
 	# será menor que otro con menor número, está al revés por temas de la cola con prioridad, 
 	# mayor bf, mayor prioridad
 	def __lt__(self, other):
-		selfPriority = self.bf
-		otherPriority = other.bf
-		return selfPriority > otherPriority
+		if len(self.planks) != len(other.planks):
+			return len(self.planks) > len(other.planks)
+
+		if self.bf != other.bf:
+			return self.bf > other.bf
+
+		return wf(self) < wf(other)
+
+# heuristica de menor porcentaje de desperdicios
+def wf(state):
+	w = 0
+	for i in state.planks:
+		sobra = (i/state.pl)*100
+		w+= sobra**3 
+	return w/10000
+
 
 
 class Action:
@@ -111,16 +123,18 @@ def visited(state):
 
 def best_first(state: State):
 	q = []
+	itera = 0
 	heapq.heappush(q,state)
 	while len(q) >0:
+		itera+=1
 		node = heapq.heappop(q)
-		print(len(node.planks))
 		if visited(node):
 			continue
 		else:
 			visit(node)
 
 		if is_final_state(node):
+			print ('iteraciones: {}   tablas: {}'.format(itera,len(node.planks)))
 			return node
 
 		actions=get_actions(node)
@@ -129,10 +143,11 @@ def best_first(state: State):
 			if not visited(sub_node):
 				heapq.heappush(q,sub_node)
 
+
 state = State([100,200,32200,400,500,3000,2700,1601,1601,1601,1599,1601,1601,1601,1601,1601,1601],3200)
 
 best = best_first(state)
-print(len(best.planks))
+
 print(best.cuts)
 
 
