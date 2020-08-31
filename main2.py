@@ -34,7 +34,7 @@ if __name__ == "__main__":
     dims = []
     MIN = 100
     RAD = 1000
-    for i in range(30):
+    for _ in range(30):
         dims.append(int(MIN + RAD * random.random()))
     state = State(dims, 3200)
     #solver = Solver(state)

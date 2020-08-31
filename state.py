@@ -80,8 +80,8 @@ class State(BaseState):
                 action = Action(plank, dim)
                 # TODO: use function of pseudo transition. Current function
                 #   creates a new instance which takes time
-                new_state = self.transition(action)
-                if new_state.is_valid():
+                # new_state = self.transition(action)
+                if self.is_valid_transition(action): # new_state.is_valid():
                     actions.append(action)
 
         if len(actions) > 0:
@@ -93,6 +93,12 @@ class State(BaseState):
                 return self.get_actions()
             else:
                 return []
+
+    def is_valid_transition(self, action: Action) -> bool:
+        # Aplicando accion
+        if self.planks[action.plank] <= action.cut:
+            return True
+        return False
 
     def transition(self, action: Action) -> State:
         """
