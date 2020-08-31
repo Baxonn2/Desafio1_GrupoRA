@@ -2,8 +2,8 @@ import pygame
 import threading
 from solver import Solver
 
-class Grapher:
 
+class Grapher:
     # Variables del graficador
     screen: pygame.surface.Surface
     done: bool
@@ -16,7 +16,7 @@ class Grapher:
         self.done = False
 
         self.state = state
-        
+
         self.solver = Solver(state)
         self.t = threading.Thread(target=self.solver.best_first)
         self.t.start()
@@ -42,8 +42,8 @@ class Grapher:
         # Dibujando planks
         pl = self.solver.actual_state.pl / SCALE
         for i in range(len(self.solver.actual_state.planks)):
-            pygame.draw.rect(self.screen, (60, 33, 33), 
-                            (MARGEN, MARGEN * (i+1) + HEIGHT * i, pl, HEIGHT))
+            pygame.draw.rect(self.screen, (60, 33, 33),
+                             (MARGEN, MARGEN * (i + 1) + HEIGHT * i, pl, HEIGHT))
 
         # Dibujando cortes
         for l_cuts in self.solver.actual_state.cuts:
@@ -52,7 +52,7 @@ class Grapher:
                 cut = cut / SCALE
                 pygame.draw.rect(self.screen, (100, 100, 100),
                                  (x, y, cut, HEIGHT))
-                pygame.draw.line(self.screen, (200, 200, 200), 
+                pygame.draw.line(self.screen, (200, 200, 200),
                                  (x + cut - 1, y), (x + cut - 1, y + HEIGHT), 1)
                 x += cut
             y += MARGEN + HEIGHT
@@ -64,8 +64,8 @@ class Grapher:
             cut = cut / SCALE
             real_y = self.screen.get_height() - y
             pygame.draw.rect(self.screen, (100, 100, 100),
-                            (x, real_y, cut, HEIGHT/2))
-            y += MARGEN + HEIGHT/2
+                             (x, real_y, cut, HEIGHT / 2))
+            y += MARGEN + HEIGHT / 2
 
     def set_state(self, state):
         self.state = state
@@ -74,6 +74,6 @@ class Grapher:
         self.done = True
         self.t.join()
         print("Fin del graficador")
-    
+
     def wait(self):
         self.t.join()
