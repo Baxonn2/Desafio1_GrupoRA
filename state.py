@@ -96,7 +96,7 @@ class State(BaseState):
 
     def is_valid_transition(self, action: Action) -> bool:
         # Aplicando accion
-        if self.planks[action.plank] <= action.cut:
+        if self.planks[action.plank] >= action.cut:
             return True
         return False
 
