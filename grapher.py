@@ -11,7 +11,7 @@ class Grapher:
     def __init__(self, state):
         # Inicializando visualizador
         pygame.init()
-        self.screen = pygame.display.set_mode((400, 400))
+        self.screen = pygame.display.set_mode((400, 800))
         pygame.display.set_caption("Graficador tablas y cortes")
         self.done = False
 

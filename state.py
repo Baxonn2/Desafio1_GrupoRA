@@ -19,6 +19,7 @@ class State(BaseState):
     def __init__(self, dims, planks_length):
         super().__init__(visited=False)
         self.dims = dims
+        self.dims.sort(reverse=True)
         self.planks = []
         self.cuts = []
         self.pl = planks_length
@@ -75,14 +76,13 @@ class State(BaseState):
             List[State]: Retorna una lista de estados
         """
         actions = []
-        for dim in self.dims:
-            for plank, _ in enumerate(self.planks):
-                action = Action(plank, dim)
-                # TODO: use function of pseudo transition. Current function
-                #   creates a new instance which takes time
-                # new_state = self.transition(action)
-                if self.is_valid_transition(action): # new_state.is_valid():
-                    actions.append(action)
+        for plank, _ in enumerate(self.planks):
+            action = Action(plank, self.dims[0])
+            # TODO: use function of pseudo transition. Current function
+            #   creates a new instance which takes time
+            # new_state = self.transition(action)
+            if self.is_valid_transition(action): # new_state.is_valid():
+                actions.append(action)
 
         if len(actions) > 0:
             return actions
@@ -124,9 +124,9 @@ class State(BaseState):
     def wf(self):
         w = 0
         for i in self.planks:
-            sobra = (i / self.pl) * 100
+            sobra = i - self.pl
             w += sobra ** 3
-        return w / 10000
+        return w
 
     # se define el operador '<' para los estados, donde un operador con mayor numero de best fits 
     # será menor que otro con menor número, está al revés por temas de la cola con prioridad, 
