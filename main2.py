@@ -34,7 +34,7 @@ if __name__ == "__main__":
     dims = []
     MIN = 100
     RAD = 1000
-    random.seed(4)
+    random.seed(random.random()*100)
     for _ in range(200):
         dims.append(int(MIN + RAD * random.random()))
     state = State(dims, 3200)

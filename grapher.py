@@ -6,6 +6,7 @@ from solver import Solver
 class Grapher:
     # Variables del graficador
     screen: pygame.surface.Surface
+    font: pygame.font.Font
     done: bool
 
     def __init__(self, state):
@@ -13,6 +14,7 @@ class Grapher:
         pygame.init()
         self.screen = pygame.display.set_mode((400, 800))
         pygame.display.set_caption("Graficador tablas y cortes")
+        self.font = pygame.font.Font(None, 20)
         self.done = False
 
         self.state = state
@@ -57,15 +59,26 @@ class Grapher:
                 x += cut
             y += MARGEN + HEIGHT
 
+        # Dibujando el procentaje de llenado de la tabla
+        # Dibujando planks
+        pl = self.solver.actual_state.pl
+        x = pl / SCALE + MARGEN + 5
+        for i, dim in enumerate(self.solver.actual_state.planks):
+            porcentaje = round((pl - dim) / pl * 100, 4) 
+            y = MARGEN * (i + 1) + HEIGHT * i
+            color = (2/((porcentaje+1)/100), 200*porcentaje/100, 100)
+            text = self.font.render(f'{porcentaje:.2f}%', True, color)
+            self.screen.blit(text, (x, y))
+
         # Dibujando cortes faltantes
-        x = MARGEN
-        y = MARGEN
-        for cut in self.solver.actual_state.dims:
-            cut = cut / SCALE
-            real_y = self.screen.get_height() - y
-            pygame.draw.rect(self.screen, (100, 100, 100),
-                             (x, real_y, cut, HEIGHT / 2))
-            y += MARGEN + HEIGHT / 2
+        # x = MARGEN
+        # y = MARGEN
+        # for cut in self.solver.actual_state.dims:
+        #     cut = cut / SCALE
+        #     real_y = self.screen.get_height() - y
+        #     pygame.draw.rect(self.screen, (100, 100, 100),
+        #                      (x, real_y, cut, HEIGHT / 2))
+        #     y += MARGEN + HEIGHT / 2
 
     def set_state(self, state):
         self.state = state
