@@ -42,7 +42,7 @@ class Grapher:
         y = MARGEN
 
         # Dibujando planks
-        pl = self.solver.actual_state.pl / SCALE
+        pl = self.solver.actual_state.plank_length / SCALE
         for i in range(len(self.solver.actual_state.planks)):
             pygame.draw.rect(self.screen, (60, 33, 33),
                              (MARGEN, MARGEN * (i + 1) + HEIGHT * i, pl, HEIGHT))
@@ -61,7 +61,7 @@ class Grapher:
 
         # Dibujando el procentaje de llenado de la tabla
         # Dibujando planks
-        pl = self.solver.actual_state.pl
+        pl = self.solver.actual_state.plank_length
         x = pl / SCALE + MARGEN + 5
         for i, dim in enumerate(self.solver.actual_state.planks):
             porcentaje = round((pl - dim) / pl * 100, 4) 

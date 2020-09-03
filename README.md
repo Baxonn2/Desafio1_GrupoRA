@@ -1,8 +1,23 @@
 # Desafio1 GrupoRA
-Este es el repositorio donde el Grupo RA desarrolla el Desafío 1
+Algoritmo best first para la resolución de problema de cortado de tablas en una 
+dimensión
 
 ## Instrucciones
-// TODO: Hacer est.o
+Rquiere python 3 y pygame v1.96.
+
+Para ejecutar se debe ejecutar el siguiente comando.
+
+``` $ python3 main.py -s <seed> -pl <plank-length> -c <cuttings> -m <min-lenght> -r <rad> -g```
+
+El código se puede ejecutar directamente sina rgumentos o con cualquiera de los presentados
+
+* -s --seed: semilla aleatoria para la ejecución. Por defecto 1234567.
+* -pl --plank-length: largo que tendrán las tablas que serán cortadas. por defecto 3200.
+* -c --cuttings: cantidad de cortes que se realizarán a las tablas. por defecto 200.
+* -m --min: largo mínimo que tendrán los cortes. Por defecto 100.
+* -r --rad: variación máxima del largo mínimo de un corte. Por defecto 1000.
+* -g --graphic: Si se utiliza este argumento, se presentará la solución del 
+problema de forma gráfica.
 
 ## Integrantes
 * Franco Ardiles
