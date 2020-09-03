@@ -3,7 +3,10 @@ Algoritmo best first para la resolución de problema de cortado de tablas en una
 dimensión
 
 ## Instrucciones
-Rquiere python 3 y pygame v1.96.
+
+Requiere python 3 y pygame v1.96.
+
+### Ejecución
 
 Para ejecutar se debe ejecutar el siguiente comando.
 
@@ -18,6 +21,25 @@ El código se puede ejecutar directamente sina rgumentos o con cualquiera de los
 * -r --rad: variación máxima del largo mínimo de un corte. Por defecto 1000.
 * -g --graphic: Si se utiliza este argumento, se presentará la solución del 
 problema de forma gráfica.
+
+### Salida
+
+Cuando termina la ejecución de la búsqueda, se retorna por consola la lista de 
+cortes realizados en cada tabla junto con información de los espacios no usados.
+
+![salida consola](./img/output_console.png)
+
+Si el modo gráfico está activo, mostrará por pantalla como está siendo 
+resuelta la instancia a través de la representación del estado de la búsqueda. 
+las tablas son representadas por barras rojas, mientras que los cortes 
+corresponden a barras grises delimitadas por un borde blanco a su lado derecho.
+Por último, el porcentaje utilizado de cada tabla es representado como porcentaje
+al lado derecho de cada tabla. Dicho porcentaje cambia de color respecto al total
+llenado, rojo para una tabla sin utilizar y verde para una tabla llena.
+
+Búsqueda en curso            |  Búsqueda finalizada
+:-------------------------:|:-------------------------:
+![solver grafico](./img/graphic_solver_searching.png) | ![solver grafico](./img/graphic_solver.png)
 
 ## Integrantes
 * Franco Ardiles
