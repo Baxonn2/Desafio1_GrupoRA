@@ -98,7 +98,7 @@ class State(BaseState):
         else:  # si no hay acciones validas se agrega una tabla
             self.planks.append(self.plank_length)
             self.cuts.append([])
-            if len(self.planks) < self.upper_bound:  # previene loop infinito
+            if len(self.planks) <= self.upper_bound:  # previene loop infinito
                 return self.get_actions()
             else:
                 return []
