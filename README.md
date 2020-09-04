@@ -24,7 +24,8 @@ problema de forma gráfica.
 
 ### Salida
 
-Cuando termina la ejecución y se cierra el grafico de la búsqueda, se retorna 
+Cuando termina la ejecución y se cierra el grafico de la búsqueda 
+(en caso de que se haya ejecutado en modo gráfico), se retorna 
 por consola la lista de cortes realizados en cada tabla junto con información de 
 los espacios no usados.
 
