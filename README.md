@@ -1,6 +1,9 @@
 # Desafio1 GrupoRA
 Algoritmo best first para la resolución de problema de cortado de tablas en una 
-dimensión
+dimensión.
+
+## Video explicativo
+Para obtener una explicación de cómo funciona esto puede ver [este video](https://drive.google.com/file/u/1/d/1fsLXOFWmeuA4X38TvQgicyurzoBK_ky9/view?usp=sharing).
 
 ## Instrucciones
 
