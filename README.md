@@ -12,7 +12,7 @@ Para ejecutar se debe ejecutar el siguiente comando.
 
 ``` $ python3 main.py -s <seed> -pl <plank-length> -c <cuttings> -m <min-lenght> -r <rad> -g```
 
-El código se puede ejecutar directamente sina rgumentos o con cualquiera de los presentados
+El código se puede ejecutar directamente sin argumentos o con cualquiera de los presentados
 
 * -s --seed: semilla aleatoria para la ejecución. Por defecto 1234567.
 * -pl --plank-length: largo que tendrán las tablas que serán cortadas. por defecto 3200.
@@ -24,8 +24,9 @@ problema de forma gráfica.
 
 ### Salida
 
-Cuando termina la ejecución de la búsqueda, se retorna por consola la lista de 
-cortes realizados en cada tabla junto con información de los espacios no usados.
+Cuando termina la ejecución y se cierra el grafico de la búsqueda, se retorna 
+por consola la lista de cortes realizados en cada tabla junto con información de 
+los espacios no usados.
 
 ![salida consola](./img/output_console.png)
 
