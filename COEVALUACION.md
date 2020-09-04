@@ -2,7 +2,7 @@
 A continuación se muestra la coevaluación del grupo. Es importante señalar que
 el grupo trabajó bastante bien como equipo, por lo que decidimos que los 
 aspectos positivos y a mejorar los vamos a señalar como equipo y no 
-individualemnte.
+individualmente.
 
 ## Evaluación
 En general trabajamos completamente parejos. Cada uno aportó en lo que pudo y
